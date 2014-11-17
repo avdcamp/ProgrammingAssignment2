@@ -5,28 +5,24 @@
 ## be used by second function cacheSolve, which will try to get
 ## a cached result of matrix inversion
 
-
-## Write a short comment describing this function
 ## this function creates a list with methods
 ## set, get, setinv and getinv. These can be 
-## used on a matrix object
+## used on a matrix object x
 makeCacheMatrix <- function(x = matrix(),...) {
   m <- NULL
   set <- function(y) {
     x <<- y
     m <<- NULL
   }
-  get <- function() x
-  setinv <- function(inverse) m <<- inverse
-  getinv <- function() m
+  get <- function() { x }
+  setinv <- function(inverse) { m <<- inverse }
+  getinv <- function() { m }
   list(set = set, get = get,
        setinv = setinv,
        getinv = getinv)
 }
 
-
-## Write a short comment describing this function
-## This function first checks whether the matrix
+## The cacheSolve function first checks whether the matrix
 ## has already had its inverse calculated.
 ## if so, it returns the cached result
 ## If not, then it will calculate the inverse
