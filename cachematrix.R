@@ -15,8 +15,11 @@ makeCacheMatrix <- function(x = matrix(),...) {
     m <<- NULL
   }
   get <- function() { x }
+  ## store result of inverse in superenvironment
   setinv <- function(inverse) { m <<- inverse }
+  ## try to retrieve stored inverse matrix
   getinv <- function() { m }
+  ## list of methods
   list(set = set, get = get,
        setinv = setinv,
        getinv = getinv)
@@ -29,13 +32,19 @@ makeCacheMatrix <- function(x = matrix(),...) {
 ## and store its result in the cache and return the value.
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+  ## First try to get inverse from other environment by callin getinv() function
   m <- x$getinv()
+  ## If we find the inverse we can return it
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
+  ## Otherwise call get function on x
   data <- x$get()
+  ## execute matrix inversion
   m <- solve(data, ...)
+  ## Store the result via setinv function
   x$setinv(m)
+  ## return value of m
   m
 }
